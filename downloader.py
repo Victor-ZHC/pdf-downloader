@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 
 # open the url and read
 def getHtml(url):
+    print("----------------------------", url, "---------------------------------")
     page = urllib.request.urlopen(url, timeout = 60)
     html = page.read()
     page.close()
