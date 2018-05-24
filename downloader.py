@@ -49,12 +49,18 @@ for i in range(115, 400):
     try:
         html = getHtml(url)
     except Exception:
-        print("Can't get html from %s", url)
+        print("Can't get html from %s" % url)
+        f1 = open("pageErr", 'a+')
+        f1.write(url + '\n')
+        f1.close()
     else:
         download_list = getDownloadList(html)
         for download_url, name in download_list:
             try:
                 getFile(download_url, name)
             except Exception:
-                print("Unable to download from %s" % url)
+                print("Unable to download from %s" % download_url)
+                f2 = open("pdfErr", 'a+')
+                f2.write(download_url + '\n')
+                f2.close()
 
