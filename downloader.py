@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 
 # open the url and read
 def getHtml(url):
-    page = urllib.request.urlopen(url, timeout = 10)
+    page = urllib.request.urlopen(url, timeout = 60)
     html = page.read()
     page.close()
     return html
@@ -26,7 +26,7 @@ def getFile(url, name):
     name = name.replace('/', '')
     file_name = name + '_' + url.split('/')[-1]
     print ("Begin to download %s from %s" % (file_name, url))
-    u = urllib.request.urlopen(url)
+    u = urllib.request.urlopen(url, timeout=60)
     if not os.path.exists('download'):
         os.mkdir('download')
     f = open(os.path.join('download/', file_name), 'wb')
