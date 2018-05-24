@@ -44,23 +44,30 @@ def getFile(url, name):
 
 root_url = 'http://search.envir.cn/results.aspx?'  #下载地址中相同的部分
 
-for i in range(115, 400):
-    url = root_url + "k=%s&start1=%s"%(urllib.parse.quote("环评 pdf"), i * 10 + 1)
-    try:
-        html = getHtml(url)
-    except Exception:
-        print("Can't get html from %s" % url)
-        f1 = open("pageErr", 'a+')
-        f1.write(url + '\n')
-        f1.close()
-    else:
-        download_list = getDownloadList(html)
-        for download_url, name in download_list:
-            try:
-                getFile(download_url, name)
-            except Exception:
-                print("Unable to download from %s" % download_url)
-                f2 = open("pdfErr", 'a+')
-                f2.write(download_url + '\n')
-                f2.close()
+# for i in range(115, 400):
+#     url = root_url + "k=%s&start1=%s"%(urllib.parse.quote("环评 pdf"), i * 10 + 1)
+#     try:
+#         html = getHtml(url)
+#     except Exception:
+#         print("Can't get html from %s" % url)
+#         f1 = open("pageErr", 'a+')
+#         f1.write(url + '\n')
+#         f1.close()
+#     else:
+#         download_list = getDownloadList(html)
+#         for download_url, name in download_list:
+#             try:
+#                 getFile(download_url, name)
+#             except Exception:
+#                 print("Unable to download from %s" % download_url)
+#                 f2 = open("pdfErr", 'a+')
+#                 f2.write(download_url + '\n')
+#                 f2.close()
+
+with open("pdfErr") as result: 
+    for download_url in result:
+        try:
+            getFile(download_url, download_url.split("/")[-1])
+        except Exception:
+            print("Unable to download from %s" % download_url)
 
