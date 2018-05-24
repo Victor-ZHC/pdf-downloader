@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 
 # open the url and read
 def getHtml(url):
-    page = urllib.request.urlopen(url)
+    page = urllib.request.urlopen(url, timeout = 10)
     html = page.read()
     page.close()
     return html
@@ -25,6 +25,7 @@ def getDownloadList(html):
 def getFile(url, name):
     name = name.replace('/', '')
     file_name = name + '_' + url.split('/')[-1]
+    print ("Begin to download %s from %s" % (file_name, url))
     u = urllib.request.urlopen(url)
     if not os.path.exists('download'):
         os.mkdir('download')
@@ -42,7 +43,7 @@ def getFile(url, name):
 
 root_url = 'http://search.envir.cn/results.aspx?'  #下载地址中相同的部分
 
-for i in range(400):
+for i in range(115, 400):
     url = root_url + "k=%s&start1=%s"%(urllib.parse.quote("环评 pdf"), i * 10 + 1)
     try:
         html = getHtml(url)
