@@ -6,8 +6,8 @@ base_rate_table = {"RMB": 2.0, "USD": 12.0, "JPY": 0.5, "EUR": 6.0}
 rate_change = 0.1
 
 file_num = 3
-data_num_per_min = 10
-total_min = 3
+data_num_per_min = 1000
+total_min = 6
 
 def generate_data(time, rate_table):
     random.seed(10)
@@ -27,11 +27,11 @@ def generate_data(time, rate_table):
             "src_name": combination[0],
             "dst_name": combination[1],
             "value": value,
-            "time": time + ":" + str(second)
+            "time": time + ":" + (str(second) if second > 9 else '0' + str(second))
         }
         generate_list.append(data)
         result_dict[combination[0]]["expend"] += value
-        result_dict[combination[1]]["income"] = round(result_dict[combination[1]]["income"] + value * rate_table[combination[0]] / rate_table[combination[1]], 2)
+        result_dict[combination[1]]["income"] = round(result_dict[combination[1]]["income"] + round(value * rate_table[combination[0]] / rate_table[combination[1]], 2), 2)
 
     return generate_list, result_dict
 
