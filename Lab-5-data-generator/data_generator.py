@@ -10,7 +10,7 @@ data_num_per_min = 1000
 total_min = 6
 
 def generate_data(time, rate_table):
-    random.seed(10)
+    # random.seed(10)
     country_combination = [random.sample(country_list, 2) for _ in range(data_num_per_min)]
     order_second = [random.randint(0, 59) for _ in range(data_num_per_min)]
     order_value = [random.randint(100, 1000) for _ in range(data_num_per_min)]
@@ -68,7 +68,7 @@ if __name__ == "__main__":
 
         generate_list, result_dict = generate_data(time, rate_table)
         result_list = [v for v in result_dict.values()]
-        save_result_data(time, result_list)
+        save_result_data(time.replace(':', '_'), result_list)
         all_generate_list += generate_list
     
     save_generate_data(generate_file_name, all_generate_list)
